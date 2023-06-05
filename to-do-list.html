@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>To-Do List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            width: 400px;
+            margin: 20px auto;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+
+        li input[type="checkbox"] {
+            margin-right: 5px;
+        }
+
+        .delete-btn {
+            background-color: #ff0000;
+            color: #ffffff;
+            padding: 5px 10px;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>To-Do List</h1>
+        <input type="text" id="taskInput" placeholder="Enter a task...">
+        <button onclick="addTask()">Add Task</button>
+        <ul id="taskList"></ul>
+    </div>
+
+    <script>
+        // Function to add a task
+        function addTask() {
+            var input = document.getElementById("taskInput");
+            var task = input.value.trim();
+
+            if (task !== "") {
+                var li = document.createElement("li");
+                var checkbox = document.createElement("input");
+                checkbox.type = "checkbox";
+                checkbox.onchange = toggleTask;
+                var label = document.createElement("label");
+                label.innerText = task;
+                var deleteBtn = document.createElement("button");
+                deleteBtn.className = "delete-btn";
+                deleteBtn.innerText = "Delete";
+                deleteBtn.onclick = deleteTask;
+
+                li.appendChild(checkbox);
+                li.appendChild(label);
+                li.appendChild(deleteBtn);
+
+                document.getElementById("taskList").appendChild(li);
+
+                input.value = "";
+            }
+        }
+
+        // Function to toggle a task as completed
+        function toggleTask() {
+            var label = this.nextSibling;
+            label.style.textDecoration = this.checked ? "line-through" : "none";
+        }
+
+        // Function to delete a task
+        function deleteTask() {
+            var li = this.parentNode;
+            var ul = li.parentNode;
+            ul.removeChild(li);
+        }
+    </script>
+</body>
+</html>
